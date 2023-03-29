@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.scss";
 import Graph from "@/components/graph";
-import tabsArray from "@/constant/tabs-array";
+import { catOne, catTwo } from "@/constant/tabs-array";
 import useAppDispatch from "@/store/hooks/use-dispatch";
 import tabsSlice from "@/store/slices/tabs";
+import PinIcon from "@/components/icons/PinIcon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +22,10 @@ function Home() {
       </Head>
       <div className={styles.graphtab}>
         <div className={styles.tabs}>
+          <label className={styles.mainlabel}>Col1</label>
           <ul>
-            {tabsArray.map((item, index) => {
+            <label className={styles.mainlabel1}>{catOne.name}</label>
+            {catOne.category.map((item, index) => {
               return (
                 <li
                   key={index}
@@ -32,13 +34,52 @@ function Home() {
                   }
                 >
                   <button>{item.label}</button>
+                  <span>
+                    <PinIcon />
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+          <ul>
+            <label className={styles.mainlabel1}>{catTwo.name}</label>
+            {catTwo.category.map((item, index) => {
+              return (
+                <li
+                  key={index}
+                  onClick={() =>
+                    dispatch(tabsSlice.actions.updateTab(item.label))
+                  }
+                >
+                  <button>{item.label}</button>
+                  <span>
+                    <PinIcon />
+                  </span>
                 </li>
               );
             })}
           </ul>
         </div>
-        <div className={styles.reactgraph}>
-          <Graph />
+        <div className={styles.raectselectbox}>
+          <ul>
+            <li>
+              <select name="" id="">
+                <option value="1">a</option>
+                <option value="1">b</option>
+                <option value="1">c</option>
+              </select>
+            </li>
+            <li>
+              <select name="" id="">
+                <option value="1">d</option>
+                <option value="1">e</option>
+                <option value="1">f</option>
+              </select>
+            </li>
+          </ul>
+          <div className={styles.reactgraph}>
+            <Graph />
+          </div>
         </div>
       </div>
     </>

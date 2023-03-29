@@ -3,13 +3,62 @@
   justify-content: space-evenly;
   align-items: center;
   border: 2px solid #949494;
-  max-width: 1100px;
+  max-width: 1220px;
   margin: 30px auto;
+  padding: 15px;
 }
 .graphtab .tabs {
-  width: 230px;
+  width: 300px;
   border: 2px solid #0000006b;
   padding: 45px;
+}
+.raectselectbox ul {
+  display: flex;
+  justify-content: center;
+}
+.raectselectbox ul li {
+  margin-left: 10px;
+  list-style: none;
+}
+.raectselectbox ul li select {
+  width: 120px;
+  padding: 5px 5px;
+}
+.graphtab .tabs .mainlabel {
+  background: none;
+  padding: 7px;
+  border-radius: 7px;
+  cursor: pointer;
+  // background-color: #000;
+  border: 2px solid #000;
+  margin-bottom: 10px;
+   display: flex;
+  transition: all 0.5s ease;
+  width: 120px;
+justify-content: center;
+  color: #000;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.graphtab .tabs ul .mainlabel1 {
+  background: none;
+  padding: 10px;
+  border-radius: 7px;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #000;
+  margin-bottom: 10px;
+  display: flex;
+  transition: all 0.5s ease;
+  width: 120px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: capitalize;
+  font-family: sans-serif;
+  margin-left: 18px;
+
 }
 .graphtab .tabs ul li {
   list-style: none;
@@ -21,16 +70,20 @@
   cursor: pointer;
   background-color: #000;
   margin-bottom: 10px;
-  transition: all 1.5s ease;
-  width: 140px;
+  transition: all 0.5s ease;
+  width: 120px;
   color: #fff;
   font-weight: 700;
   text-transform: capitalize;
+  margin-left: 40px;
+}
+.graphtab .tabs ul li span {
+  margin-left: 10px;
 }
 .graphtab .tabs ul li button:hover {
   background-color: #fff;
   color: #000;
-  transition: all 1.5s ease;
+ transition: all 0.5s ease;
 }
 .graphtab .reactgraph {
   width: 800px;
