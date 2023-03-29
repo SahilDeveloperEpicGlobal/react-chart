@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import useAppSelector from "@/store/hooks/use-selector";
+import Payload from "@/constant/payload";
 
 ChartJS.register(
   CategoryScale,
@@ -24,9 +25,36 @@ ChartJS.register(
 
 const fakeData = Array.from({ length: 50 }).map((_, i) => i / 10);
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
+const labels = [
+  "January",
+  "January",
+  "January",
+  "January",
+  "January",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+];
+console.clear();
 const Graph = () => {
+  const graphData = React.useRef<number[]>([]);
+  Payload.Data.map((iterator_one) => {
+    return iterator_one.map((iterator_two) => {
+      if (Array.isArray(iterator_two)) {
+        return iterator_two.map((iterator_three) => {
+          if (typeof iterator_three === "number") {
+            graphData.current.push(iterator_three);
+            return iterator_three;
+          }
+        });
+      }
+    });
+  });
+
   const tabs = useAppSelector((state) => state.tabs);
 
   const graphOptions = React.useMemo(() => {
@@ -60,237 +88,33 @@ const Graph = () => {
       pointRadius: 3,
     };
   }, []);
-  const MultipleGraph = React.useMemo(() => {
-    switch (tabs.tabName) {
-      case "MG1":
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-      case "M1":
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-      case "M2":
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-      case "M3":
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-      case "MG2":
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-      case "M4":
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-      case "M5":
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-      case "M6":
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-      default:
-        return (
-          <Line
-            options={graphOptions}
-            data={{
-              labels,
-              datasets: [
-                {
-                  data: [...fakeData],
-                  label: `High`,
-                  borderColor: "rgb(53, 162, 235)",
-                  backgroundColor: "rgba(53, 162, 235, 0.5)",
-                  ...graphDatasets,
-                },
-                {
-                  data: [...fakeData],
-                  label: `Low`,
-                  borderColor: "rgb(255, 99, 132)",
-                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  ...graphDatasets,
-                },
-              ],
-            }}
-          />
-        );
-    }
-  }, [graphDatasets, graphOptions, tabs.tabName]);
 
-  return <React.Fragment>{MultipleGraph}</React.Fragment>;
+  return (
+    <React.Fragment>
+      <Line
+        options={graphOptions}
+        data={{
+          labels: Array.from({ length: 100 }).map((_, i) => i),
+          datasets: [
+            {
+              data: graphData.current,
+              label: `High`,
+              borderColor: "rgb(53, 162, 235)",
+              backgroundColor: "rgba(53, 162, 235, 0.5)",
+              ...graphDatasets,
+            },
+            {
+              data: graphData.current.slice(100, 200),
+              label: `Low`,
+              borderColor: "rgb(255, 99, 132)",
+              backgroundColor: "rgba(255, 99, 132, 0.5)",
+              ...graphDatasets,
+            },
+          ],
+        }}
+      />
+    </React.Fragment>
+  );
 };
 
 export default Graph;
