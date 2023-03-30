@@ -21,7 +21,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-const fakeData = Array.from({ length: 50 }).map((_, i) => i / 10);
+const fakeData = Array.from({ length: 40 }).map((_, i) => i / 10);
 const labels = [
   "January",
   "January",
@@ -47,7 +47,7 @@ class Graph extends React.Component {
         },
         title: {
           display: true,
-          text: "Chart.js Line Chart",
+          text: "Chart",
         },
       },
       scales: {
@@ -59,11 +59,11 @@ class Graph extends React.Component {
       },
     };
     this.graphDatasets = {
-      tension: 0.1,
+      tension: 0.4,
       borderWidth: 1,
       pointHitRadius: 10,
       pointStyle: "circle",
-      pointRadius: 3,
+      pointRadius: 2,
     };
   }
   render() {
@@ -95,11 +95,11 @@ class Graph extends React.Component {
     const _dataTwo = () => {
       switch (this.props.tabs.tabTwo) {
         case "M4":
-          return graphData.slice(150, 180);
+          return graphData.slice(180, 220);
         case "M5":
-          return graphData.slice(190, 260);
+          return graphData.slice(220, 270);
         case "M6":
-          return graphData.slice(260, 350);
+          return graphData.slice(270, 360);
         default:
           return [];
       }
@@ -109,22 +109,24 @@ class Graph extends React.Component {
     return (
       <React.Fragment>
         <Line
+          height={195}
           options={this.graphOptions}
           data={{
-            labels: Array.from({ length: 45 }).map((_, i) => i),
+            // labels,
+            labels: Array.from({ length: 30 }).map((_, i) => i),
             datasets: [
               {
                 data: dataOne,
                 label: `High`,
-                borderColor: "rgb(53, 162, 235)",
-                backgroundColor: "rgba(53, 162, 235, 0.5)",
+                borderColor: "#8093f1",
+                backgroundColor: "#8093f1",
                 ...this.graphDatasets,
               },
               {
                 data: dataTwo,
                 label: `Low`,
                 borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
+                backgroundColor: "rgb(255, 99, 132)",
                 ...this.graphDatasets,
               },
             ],

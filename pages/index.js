@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import AddBox from "@/components/icons/AddBox";
 import { updateTab } from "@/store/slices/tabs";
 import RemoveBox from "@/components/icons/RemoveBox";
+import country from "../constant/country";
 class Home extends React.Component {
   constructor() {
     super(...arguments);
@@ -22,7 +23,6 @@ class Home extends React.Component {
     };
   }
   render() {
-    console.log(this.state);
     const dropdownStyle = {
       dOne: {
         maxHeight: this.state.tabOne ? "200px" : "0px",
@@ -58,8 +58,12 @@ class Home extends React.Component {
               </label>
               <ul style={dropdownStyle.dOne}>
                 {catOne.category.map((item, index) => {
+                  const active = this.props.tabs.tabOne === item.label;
                   return (
                     <li
+                      style={{
+                        background: active ? "#8093f1" : "",
+                      }}
                       key={index}
                       onClick={() =>
                         this.props.dispatch(
@@ -71,7 +75,7 @@ class Home extends React.Component {
                       }
                     >
                       <span className={styles["name"]}>{item.label}</span>
-                      {this.props.tabs.tabOne === item.label ? (
+                      {active ? (
                         <PinIcon height={16} width={16} fill="#fff" />
                       ) : null}
                     </li>
@@ -93,8 +97,13 @@ class Home extends React.Component {
               </label>
               <ul style={dropdownStyle.dTwo}>
                 {catTwo.category.map((item, index) => {
+                  const active = this.props.tabs.tabTwo === item.label;
+
                   return (
                     <li
+                      style={{
+                        background: active ? "rgb(255, 99, 132)" : "",
+                      }}
                       key={index}
                       onClick={() =>
                         this.props.dispatch(
@@ -116,23 +125,31 @@ class Home extends React.Component {
             </div>
           </div>
           <div className={styles.raectselectbox}>
-            <ul>
-              <li>
-                <select name="" id="">
-                  <option value="1">a</option>
-                  <option value="1">b</option>
-                  <option value="1">c</option>
-                </select>
-              </li>
-              <li>
-                <select name="" id="">
-                  <option value="1">d</option>
-                  <option value="1">e</option>
-                  <option value="1">f</option>
-                </select>
-              </li>
-            </ul>
             <div className={styles.reactgraph}>
+              <ul>
+                <li>
+                  <select defaultValue={country[10].name}>
+                    {country.map((item, index) => {
+                      return (
+                        <option key={index} value={item.name}>
+                          {item.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </li>
+                <li>
+                  <select defaultValue={country[20].name}>
+                    {country.map((item, index) => {
+                      return (
+                        <option key={index} value={item.name}>
+                          {item.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </li>
+              </ul>
               <Graph />
             </div>
           </div>
