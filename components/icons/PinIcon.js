@@ -1,6 +1,5 @@
 import React from "react";
-
-class PinIcon extends React.Component<React.SVGProps<SVGSVGElement>, {}> {
+class PinIcon extends React.Component {
   render() {
     return (
       <svg
@@ -16,5 +15,4 @@ class PinIcon extends React.Component<React.SVGProps<SVGSVGElement>, {}> {
     );
   }
 }
-
 export default PinIcon;

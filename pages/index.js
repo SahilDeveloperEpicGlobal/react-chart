@@ -1,30 +1,28 @@
 import Head from "next/head";
 import React from "react";
 import Graph from "@/components/graph";
-import styles from "@/styles/Home.module.scss";
+import styles from "@/styles/home.module.scss";
 import PinIcon from "@/components/icons/PinIcon";
 import { catOne, catTwo } from "@/constant/tabs-array";
 import { connect } from "react-redux";
-import { RootState } from "@/typings/store";
 import AddBox from "@/components/icons/AddBox";
 import { updateTab } from "@/store/slices/tabs";
 import RemoveBox from "@/components/icons/RemoveBox";
-
 class Home extends React.Component {
-  state = {
-    tabOne: true,
-    tabTwo: true,
-  };
-
-  whenOpen = (key, value) => {
-    this.setState({
-      [key]: value,
-    });
-  };
-
+  constructor() {
+    super(...arguments);
+    this.state = {
+      tabOne: true,
+      tabTwo: true,
+    };
+    this.whenOpen = (key, value) => {
+      this.setState({
+        [key]: value,
+      });
+    };
+  }
   render() {
     console.log(this.state);
-
     const dropdownStyle = {
       dOne: {
         maxHeight: this.state.tabOne ? "200px" : "0px",
@@ -143,9 +141,7 @@ class Home extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state) => ({
   tabs: state.tabs,
 });
-
 export default connect(mapStateToProps)(Home);

@@ -12,8 +12,6 @@ import {
 import { Line } from "react-chartjs-2";
 import Payload from "@/constant/payload";
 import { connect } from "react-redux";
-import { RootState } from "@/typings/store";
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,9 +21,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
 const fakeData = Array.from({ length: 50 }).map((_, i) => i / 10);
-
 const labels = [
   "January",
   "January",
@@ -40,37 +36,38 @@ const labels = [
   "June",
   "July",
 ];
-
 class Graph extends React.Component {
-  graphOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: "Chart.js Line Chart",
-      },
-    },
-    scales: {
-      x: {
-        grid: {
+  constructor() {
+    super(...arguments);
+    this.graphOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
           display: true,
+          text: "Chart.js Line Chart",
         },
       },
-    },
-  };
-  graphDatasets = {
-    tension: 0.1,
-    borderWidth: 1,
-    pointHitRadius: 10,
-    pointStyle: "circle",
-    pointRadius: 3,
-  };
-
+      scales: {
+        x: {
+          grid: {
+            display: true,
+          },
+        },
+      },
+    };
+    this.graphDatasets = {
+      tension: 0.1,
+      borderWidth: 1,
+      pointHitRadius: 10,
+      pointStyle: "circle",
+      pointRadius: 3,
+    };
+  }
   render() {
-    let graphData: number[] = [];
+    let graphData = [];
     Payload.Data.map((iterator_one) => {
       return iterator_one.map((iterator_two) => {
         if (Array.isArray(iterator_two)) {
@@ -83,7 +80,6 @@ class Graph extends React.Component {
         }
       });
     });
-
     const _dataOne = () => {
       switch (this.props.tabs.tabOne) {
         case "M1":
@@ -108,10 +104,8 @@ class Graph extends React.Component {
           return [];
       }
     };
-
     const dataOne = _dataOne();
     const dataTwo = _dataTwo();
-
     return (
       <React.Fragment>
         <Line
@@ -140,9 +134,7 @@ class Graph extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state) => ({
   tabs: state.tabs,
 });
-
 export default connect(mapStateToProps)(Graph);
