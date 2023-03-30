@@ -1,6 +1,6 @@
 import React from "react";
 
-class PinIcon extends React.Component<React.SVGProps<SVGSVGElement>, {}> {
+class AddBox extends React.Component<React.SVGProps<SVGSVGElement>, {}> {
   render() {
     return (
       <svg
@@ -11,10 +11,10 @@ class PinIcon extends React.Component<React.SVGProps<SVGSVGElement>, {}> {
         {...this.props}
       >
         <path fill="none" d="M0 0h24v24H0z" />
-        <path d="M18 3v2h-1v6l2 3v2h-6v7h-2v-7H5v-2l2-3V5H6V3h12zM9 5v6.606L7.404 14h9.192L15 11.606V5H9z" />
+        <path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1 2v14h14V5H5zm6 6V7h2v4h4v2h-4v4h-2v-4H7v-2h4z" />
       </svg>
     );
   }
 }
 
-export default PinIcon;
+export default AddBox;
