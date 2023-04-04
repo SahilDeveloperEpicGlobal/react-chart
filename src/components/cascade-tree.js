@@ -2,6 +2,7 @@ import React from "react";
 import PlusMinus from "./plus-minus";
 import PinIcon from "./icons/PinIcon";
 import styles from "../styles/cascade.module.scss";
+import PinSelectedIcon from "./icons/PinSelectedIcon";
 
 const CascadeTree = ({ children }) => {
   return (
@@ -12,7 +13,14 @@ const CascadeTree = ({ children }) => {
 };
 export default CascadeTree;
 
-export const Cascade = ({ active, checked, pinProps, children, ...rest }) => {
+export const Cascade = ({
+  active,
+  checked,
+  pinProps,
+  children,
+  pinned,
+  ...rest
+}) => {
   return (
     <div
       className={styles["item-center"]}
@@ -23,14 +31,21 @@ export const Cascade = ({ active, checked, pinProps, children, ...rest }) => {
     >
       {<PlusMinus active={checked} />}
       {children}
+
       {pinProps ? (
         <span
           {...pinProps}
           className={`${
-            pinProps?.show ? styles["item-pin"] : styles["item-pin-hover"]
+            pinProps?.show || pinned
+              ? styles["item-pin"]
+              : styles["item-pin-hover"]
           } ${styles["item-center"]}`}
         >
-          <PinIcon height={18} width={18} fill="#555" />
+          {pinned ? (
+            <PinSelectedIcon height={18} width={18} fill="#555" />
+          ) : (
+            <PinIcon height={18} width={18} fill="#555" />
+          )}
         </span>
       ) : (
         <span></span>
