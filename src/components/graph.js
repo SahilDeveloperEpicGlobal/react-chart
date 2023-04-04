@@ -66,7 +66,7 @@ class Graph extends React.Component {
       });
     });
     const _dataOne = () => {
-      switch (this.props.tabs.tabOne) {
+      switch (this.props.tabs.tab) {
         case "M1":
           return graphData.slice(100, 150);
         case "M2":
@@ -83,8 +83,9 @@ class Graph extends React.Component {
           return [];
       }
     };
-    const _dataTwo = () => {
-      switch (this.props.tabs.tabTwo) {
+
+    const dataTwo = (label) => {
+      switch (label) {
         case "M1":
           return graphData.slice(100, 150);
         case "M2":
@@ -101,8 +102,9 @@ class Graph extends React.Component {
           return [];
       }
     };
+
+    console.log({ pins: this.props.tabs.pin });
     const dataOne = _dataOne();
-    const dataTwo = _dataTwo();
 
     return (
       <React.Fragment>
@@ -120,13 +122,20 @@ class Graph extends React.Component {
                 backgroundColor: "#8093f1",
                 ...this.graphDatasets,
               },
-              {
-                data: dataTwo,
-                label: `Low`,
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgb(255, 99, 132)",
-                ...this.graphDatasets,
-              },
+
+              ...this.props.tabs.pin.map((item, index) => {
+                return {
+                  data: dataTwo(item),
+                  label: item,
+                  borderColor: `rgb(255, ${132 + index * 20}, ${
+                    132 + index * 20
+                  })`,
+                  backgroundColor: `rgb(255, ${132 + index * 20}, ${
+                    132 + index * 10
+                  })`,
+                  ...this.graphDatasets,
+                };
+              }),
             ],
           }}
         />

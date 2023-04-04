@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Graph from "../components/graph";
 import country from "../constant/country";
 import styles from "../styles/home.module.scss";
-import { updateTab } from "../store/slices/tabs";
+import { addPin, updateTab } from "../store/slices/tabs";
 import { catOne, catTwo } from "../constant/tabs-array";
 import CascadeTree, {
   Cascade,
@@ -23,11 +23,12 @@ class App extends React.Component {
         [key]: value,
       });
     };
-    this.whenPin = (event) => {
+    this.whenPin = (event, label) => {
       event.stopPropagation();
-      console.log("Clicked On Pin");
+      this.props.dispatch(addPin(label));
     };
   }
+
   render() {
     return (
       <>
@@ -52,14 +53,14 @@ class App extends React.Component {
                       }}
                     >
                       {catOne.category.map((item) => {
-                        const active = this.props.tabs.tabOne === item.label;
+                        const active = this.props.tabs.tab === item.label;
 
                         return (
                           <TreeItem
                             onClick={() =>
                               this.props.dispatch(
                                 updateTab({
-                                  key: "tabOne",
+                                  key: "tab",
                                   value: item.label,
                                 })
                               )
@@ -70,11 +71,7 @@ class App extends React.Component {
                               pinProps={{
                                 show: active,
                                 onClick: (event) => {
-                                  this.whenPin(event);
-                                  updateTab({
-                                    key: "tabOne",
-                                    value: item.label,
-                                  });
+                                  this.whenPin(event, item.label);
                                 },
                               }}
                             >
@@ -100,14 +97,13 @@ class App extends React.Component {
                       }}
                     >
                       {catTwo.category.map((item) => {
-                        const active = this.props.tabs.tabTwo === item.label;
-
+                        const active = this.props.tabs.tab === item.label;
                         return (
                           <TreeItem
                             onClick={() =>
                               this.props.dispatch(
                                 updateTab({
-                                  key: "tabTwo",
+                                  key: "tab",
                                   value: item.label,
                                 })
                               )
@@ -116,13 +112,9 @@ class App extends React.Component {
                             <Cascade
                               active={active}
                               pinProps={{
-                                show: this.props.tabs.tabTwo === item.label,
+                                show: this.props.tabs.tab === item.label,
                                 onClick: (event) => {
-                                  this.whenPin(event);
-                                  updateTab({
-                                    key: "tabTwo",
-                                    value: item.label,
-                                  });
+                                  this.whenPin(event, item.label);
                                 },
                               }}
                             >
