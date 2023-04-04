@@ -68,6 +68,7 @@ class App extends React.Component {
                           >
                             <Cascade
                               active={active}
+                              pinned={this.props.tabs.pin.includes(item.label)}
                               pinProps={{
                                 show: active,
                                 onClick: (event) => {
@@ -111,6 +112,7 @@ class App extends React.Component {
                           >
                             <Cascade
                               active={active}
+                              pinned={this.props.tabs.pin.includes(item.label)}
                               pinProps={{
                                 show: this.props.tabs.tab === item.label,
                                 onClick: (event) => {
