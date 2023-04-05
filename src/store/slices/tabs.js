@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   tab: "M1",
   pin: [],
+  content: {},
 };
 const tabsSlice = createSlice({
   name: "tabs",
@@ -20,7 +21,10 @@ const tabsSlice = createSlice({
       }
       state.pin.push(action.payload);
     },
+    addContent: (state, action) => {
+      state.content = action.payload;
+    },
   },
 });
-export const { updateTab, addPin } = tabsSlice.actions;
+export const { updateTab, addPin, addContent } = tabsSlice.actions;
 export default tabsSlice;

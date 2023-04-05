@@ -3,7 +3,7 @@
   $border-color: #ddd;
   $background-color: #eee;
   $border-weight: 2px;
-  $margin: 12px;
+  $margin: 10px;
   margin: $margin * 1.5;
   padding: 0;
   &:not(:empty):before,
@@ -55,11 +55,11 @@
         border-top: $border-weight dotted $border-color;
         width: $margin;
         left: -$margin;
-        top: $margin * 2;
+        top: $margin + 6;
       }
 
       &:last-child:before {
-        height: $margin * 2;
+        height: $margin + 6;
         top: 0;
       }
     }

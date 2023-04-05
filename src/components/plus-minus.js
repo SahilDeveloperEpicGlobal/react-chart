@@ -12,9 +12,9 @@ const PlusMinus = ({ active = false }) => {
       }}
     >
       {active ? (
-        <RemoveBox height={18} width={18} fill="#555" />
+        <RemoveBox height={16} width={16} fill="#555" />
       ) : (
-        <AddBox height={18} width={18} fill="#555" />
+        <AddBox height={16} width={16} fill="#555" />
       )}
     </div>
   );

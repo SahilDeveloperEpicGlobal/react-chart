@@ -42,9 +42,9 @@ export const Cascade = ({
           } ${styles["item-center"]}`}
         >
           {pinned ? (
-            <PinSelectedIcon height={18} width={18} fill="#555" />
+            <PinSelectedIcon height={16} width={16} fill="#555" />
           ) : (
-            <PinIcon height={18} width={18} fill="#555" />
+            <PinIcon height={16} width={16} fill="#555" />
           )}
         </span>
       ) : (

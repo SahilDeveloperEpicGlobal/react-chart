@@ -103,13 +103,12 @@ class Graph extends React.Component {
       }
     };
 
-    console.log({ pins: this.props.tabs.pin });
     const dataOne = _dataOne();
 
     return (
       <React.Fragment>
         <Line
-          height={195}
+          height={`200px`}
           options={this.graphOptions}
           data={{
             // labels,
@@ -122,7 +121,6 @@ class Graph extends React.Component {
                 backgroundColor: "#8093f1",
                 ...this.graphDatasets,
               },
-
               ...this.props.tabs.pin.map((item, index) => {
                 return {
                   data: dataTwo(item),
