@@ -1,25 +1,38 @@
 import React from "react";
 import { connect } from "react-redux";
 import Graph from "../components/graph";
-import country from "../constant/country";
 import styles from "../styles/home.module.scss";
-import { addPin, updateTab, addContent } from "../store/slices/tabs";
-import CascadeTree, {
-  Cascade,
-  TreeItem,
-  TreeWraper,
-} from "../components/cascade-tree";
-
+import { addPin, updateTab, addContent, removePin } from "../store/slices/tabs";
+import CascadeTree from "../components/cascade-tree";
+import { Cascade, TreeItem, TreeWraper } from "../components/cascade-tree";
 import response3 from "../constant/response3.json";
+import DataPayloadResponse from "../constant/DataPayloadResponse.json";
+import aa from "../constant/aa.json";
+import extractGroup from "../utils/extractGroup";
+import extractData from "../utils/extractData";
+import CloseIcon from "../components/icons/CloseIcon";
+
+const countries = [
+  { value: "1", label: "USA" },
+  { value: "2", label: "Australia" },
+  { value: "3", label: "Cambodia" },
+  { value: "4", label: "India" },
+];
+
+const categories = [
+  { value: "1", label: "Commodities" },
+  { value: "2", label: "Catalog" },
+  { value: "3", label: "Consumer" },
+];
 
 class App extends React.Component {
   constructor() {
     super(...arguments);
     this.state = {
-      tabOne: false,
-      tabTwo: true,
+      country: "USA",
+      category: "Commodities",
     };
-    this.whenOpen = (key, value) => {
+    this.updateState = (key, value) => {
       this.setState({
         [key]: value,
       });
@@ -28,61 +41,41 @@ class App extends React.Component {
       event.stopPropagation();
       this.props.dispatch(addPin(label));
     };
+    this.onRemoveChip = (item) => {
+      console.log(item);
+      // this.props.dispatch(removePin(item));
+    };
   }
 
   render() {
-    const measureGroupMG = () => {
-      var compactJson = response3;
-      compactJson = response3;
-      var measure_group_list = compactJson.Data[0][0][0].split(",");
-      var measures_LS = compactJson.Data[0][1][0].split(",");
-      var measures_groups_API = compactJson.Data[0][2][0].split(",");
-      var measures_URL = compactJson.Data[0][3][0].split(",");
+    // EXTRACT MEASURE GROUP
+    const array = extractGroup(response3);
+    // EXTRACT MEASURE DATA
+    const lineData = extractData(DataPayloadResponse);
 
-      let measure_group = {};
-      let URL_map = {};
-      let measures_map = {};
-      let MG = [];
-
-      for (let i = 0; i < measures_LS.length; i++) {
-        measures_map[measures_groups_API[i]] = measures_LS[i];
-      }
-
-      for (let i = 0; i < measures_groups_API.length; i++) {
-        URL_map[measures_groups_API[i]] = measures_URL[i];
-      }
-
-      for (let i = 0; i < measure_group_list.length; i++) {
-        if (!measure_group[measure_group_list[i]]) {
-          measure_group[measure_group_list[i]] = [];
-        }
-        measure_group[measure_group_list[i]].push(measures_groups_API[i]);
-      }
-
-      Object.keys(measure_group).forEach((key) => {
-        let options = [];
-        for (let i = 0; i < measure_group[key].length; i++) {
-          console.log(URL_map[measure_group[key]]);
-          options.push({
-            value: i,
-            label: measure_group[key][i],
-            url: URL_map[measure_group[key]],
-          });
-        }
-        MG.push({
-          label: key,
-          options: options,
-        });
-      });
-      return MG;
-    };
-
-    const array = measureGroupMG();
-
+    console.log(this.props.tabs.pin);
     return (
       <>
         <div className={styles.graphtab}>
           <div className={styles.tabs}>
+            {this.props.tabs.pin.length > 0 && (
+              <div className={styles["selected-chips"]}>
+                <ul>
+                  {this.props.tabs.pin.map((item, index) => {
+                    return (
+                      <li key={index}>
+                        {item}
+                        <span
+                          onClick={() => this.props.dispatch(removePin(item))}
+                        >
+                          <CloseIcon height={16} width={16} fill="#555" />
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
             <CascadeTree>
               <TreeItem>
                 <Cascade>Col</Cascade>
@@ -195,29 +188,43 @@ class App extends React.Component {
             <div className={styles.reactgraph}>
               <ul>
                 <li>
-                  <select defaultValue={country[10].name}>
-                    {country.map((item, index) => {
+                  <select
+                    defaultValue={this.state.country}
+                    onChange={({ target }) =>
+                      this.updateState("country", target.value)
+                    }
+                  >
+                    {countries.map((item, index) => {
                       return (
-                        <option key={index} value={item.name}>
-                          {item.name}
+                        <option key={index} value={item.label}>
+                          {item.label}
                         </option>
                       );
                     })}
                   </select>
                 </li>
                 <li>
-                  <select defaultValue={country[20].name}>
-                    {country.map((item, index) => {
+                  <select
+                    defaultValue={this.state.category}
+                    onChange={({ target }) =>
+                      this.updateState("category", target.value)
+                    }
+                  >
+                    {categories.map((item, index) => {
                       return (
-                        <option key={index} value={item.name}>
-                          {item.name}
+                        <option key={index} value={item.label}>
+                          {item.label}
                         </option>
                       );
                     })}
                   </select>
                 </li>
               </ul>
-              <Graph />
+              <Graph
+                lineData={lineData}
+                country={this.state.country}
+                category={this.state.category}
+              />
             </div>
             <div>
               {this.props.tabs?.content?.label && (

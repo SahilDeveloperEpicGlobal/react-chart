@@ -24,7 +24,11 @@ const tabsSlice = createSlice({
     addContent: (state, action) => {
       state.content = action.payload;
     },
+    removePin: (state, action) => {
+      console.log("Payload", action.payload);
+      state.pin = state.pin.filter((item) => item !== action.payload);
+    },
   },
 });
-export const { updateTab, addPin, addContent } = tabsSlice.actions;
+export const { updateTab, addPin, addContent, removePin } = tabsSlice.actions;
 export default tabsSlice;

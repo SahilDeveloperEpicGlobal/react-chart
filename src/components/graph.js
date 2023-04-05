@@ -8,10 +8,13 @@ import {
   Title,
   Tooltip,
   Legend,
+  TimeScale,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import Payload from "../constant/payload";
 import { connect } from "react-redux";
+import moment from "moment/moment";
+import "chartjs-adapter-moment";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -19,7 +22,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  TimeScale
 );
 class Graph extends React.Component {
   constructor() {
@@ -37,9 +41,19 @@ class Graph extends React.Component {
       },
       scales: {
         x: {
-          grid: {
-            display: true,
+          type: "time",
+          time: {
+            unit: "day",
+            tooltipFormat: "YYYY-MM-DD",
+            parser: "YYYY/MM",
+            displayFormats: {
+              day: "YYYY/MM",
+            },
           },
+          ticks: {
+            maxTicksLimit: 11.1,
+          },
+          display: true,
         },
       },
     };
@@ -52,33 +66,22 @@ class Graph extends React.Component {
     };
   }
   render() {
-    let graphData = [];
-    Payload.Data.map((iterator_one) => {
-      return iterator_one.map((iterator_two) => {
-        if (Array.isArray(iterator_two)) {
-          return iterator_two.map((iterator_three) => {
-            if (typeof iterator_three === "number") {
-              graphData.push(iterator_three);
-              return iterator_three;
-            }
-          });
-        }
-      });
-    });
+    let { country, category, lineData } = this.props;
+
     const _dataOne = () => {
       switch (this.props.tabs.tab) {
         case "M1":
-          return graphData.slice(100, 150);
+          return this.props.lineData.slice(150, 200);
         case "M2":
-          return graphData.slice(150, 200);
+          return this.props.lineData.slice(150, 200);
         case "M3":
-          return graphData.slice(200, 250);
+          return this.props.lineData.slice(200, 250);
         case "M4":
-          return graphData.slice(180, 220);
+          return this.props.lineData.slice(180, 220);
         case "M5":
-          return graphData.slice(220, 270);
+          return this.props.lineData.slice(220, 270);
         case "M6":
-          return graphData.slice(270, 360);
+          return this.props.lineData.slice(270, 360);
         default:
           return [];
       }
@@ -87,17 +90,17 @@ class Graph extends React.Component {
     const dataTwo = (label) => {
       switch (label) {
         case "M1":
-          return graphData.slice(100, 150);
+          return lineData.slice(100, 150);
         case "M2":
-          return graphData.slice(150, 200);
+          return lineData.slice(150, 200);
         case "M3":
-          return graphData.slice(200, 250);
+          return lineData.slice(200, 250);
         case "M4":
-          return graphData.slice(180, 220);
+          return lineData.slice(180, 220);
         case "M5":
-          return graphData.slice(220, 270);
+          return lineData.slice(220, 270);
         case "M6":
-          return graphData.slice(270, 360);
+          return lineData.slice(270, 360);
         default:
           return [];
       }
@@ -105,35 +108,39 @@ class Graph extends React.Component {
 
     const dataOne = _dataOne();
 
+    const labels = this.props.lineData
+      .slice(0, 50)
+      .map((data) => moment(data.date).format("YYYY/MM/DD"));
+
     return (
       <React.Fragment>
         <Line
           height={`200px`}
           options={this.graphOptions}
           data={{
-            // labels,
-            labels: Array.from({ length: 30 }).map((_, i) => i),
+            label: this.props.tabs.tab,
+            labels,
             datasets: [
               {
-                data: dataOne,
+                data: dataOne.map((item) => item.FSRaw),
                 label: `High`,
                 borderColor: "#8093f1",
                 backgroundColor: "#8093f1",
                 ...this.graphDatasets,
               },
-              ...this.props.tabs.pin.map((item, index) => {
-                return {
-                  data: dataTwo(item),
-                  label: item,
-                  borderColor: `rgb(255, ${132 + index * 20}, ${
-                    132 + index * 20
-                  })`,
-                  backgroundColor: `rgb(255, ${132 + index * 20}, ${
-                    132 + index * 10
-                  })`,
-                  ...this.graphDatasets,
-                };
-              }),
+              // ...this.props.tabs.pin.map((item, index) => {
+              //   return {
+              //     data: dataTwo(item),
+              //     label: item,
+              //     borderColor: `rgb(255, ${132 + index * 20}, ${
+              //       132 + index * 20
+              //     })`,
+              //     backgroundColor: `rgb(255, ${132 + index * 20}, ${
+              //       132 + index * 10
+              //     })`,
+              //     ...this.graphDatasets,
+              //   };
+              // }),
             ],
           }}
         />
