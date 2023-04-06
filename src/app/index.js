@@ -53,7 +53,6 @@ class App extends React.Component {
     // EXTRACT MEASURE DATA
     const lineData = extractData(DataPayloadResponse);
 
-    console.log(this.props.tabs.pin);
     return (
       <>
         <div className={styles.graphtab}>

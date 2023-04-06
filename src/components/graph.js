@@ -55,6 +55,17 @@ class Graph extends React.Component {
           },
           display: true,
         },
+        y: {
+          ticks: {
+            callback: function (value) {
+              return `${value}%`;
+            },
+          },
+          scaleLabel: {
+            display: true,
+            labelString: "Percentage",
+          },
+        },
       },
     };
     this.graphDatasets = {
