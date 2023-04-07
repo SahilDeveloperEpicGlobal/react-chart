@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  tab: "M1",
+  tab: "Aluminum",
   pin: [],
   content: {},
 };

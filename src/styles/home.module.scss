@@ -162,3 +162,34 @@
     }
   }
 }
+
+.content-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0.5rem;
+  margin-top: 10px;
+  border-radius: 8px;
+  li {
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    position: relative;
+    background: rgb(241, 241, 241);
+  }
+}
+.close-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  height: 24px;
+  width: 24px;
+  border-radius: 100%;
+  justify-content: center;
+  &:hover {
+    background: #d1d1d1;
+  }
+}

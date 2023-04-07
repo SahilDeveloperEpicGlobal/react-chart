@@ -25,10 +25,13 @@ ChartJS.register(
   Legend,
   TimeScale
 );
+
+const colors = ["ef476f", "06d6a0", "118ab2", "073b4c"];
 class Graph extends React.Component {
-  constructor() {
-    super(...arguments);
-    this.graphOptions = {
+  render() {
+    let { country, category, tabs, lineData } = this.props;
+
+    const graphOptions = {
       responsive: true,
       plugins: {
         legend: {
@@ -58,7 +61,7 @@ class Graph extends React.Component {
         y: {
           ticks: {
             callback: function (value) {
-              return `${value}%`;
+              return `${value}${tabs.pin.length > 1 ? "%" : ""}`;
             },
           },
           scaleLabel: {
@@ -68,50 +71,46 @@ class Graph extends React.Component {
         },
       },
     };
-    this.graphDatasets = {
+    const graphDatasets = {
       tension: 0.4,
       borderWidth: 1,
       pointHitRadius: 10,
       pointStyle: "circle",
       pointRadius: 2,
     };
-  }
-  render() {
-    let { country, category, lineData } = this.props;
-
     const _dataOne = () => {
-      switch (this.props.tabs.tab) {
-        case "M1":
-          return this.props.lineData.slice(150, 200);
-        case "M2":
-          return this.props.lineData.slice(150, 200);
-        case "M3":
-          return this.props.lineData.slice(200, 250);
-        case "M4":
-          return this.props.lineData.slice(180, 220);
-        case "M5":
-          return this.props.lineData.slice(220, 270);
-        case "M6":
-          return this.props.lineData.slice(270, 360);
+      switch (tabs.tab) {
+        case "Aluminum":
+          return lineData.slice(130, 200);
+        case "Cobalt":
+          return lineData.slice(150, 200);
+        case "Copper":
+          return lineData.slice(200, 250);
+        case "Gold":
+          return lineData.slice(180, 220);
+        case "Lead":
+          return lineData.slice(220, 270);
+        case "Molybdenum":
+          return lineData.slice(270, 360);
         default:
           return [];
       }
     };
 
-    const dataTwo = (label) => {
+    const _dataTwo = (label) => {
       switch (label) {
-        case "M1":
-          return lineData.slice(100, 150);
-        case "M2":
-          return lineData.slice(150, 200);
-        case "M3":
+        case "Aluminum":
           return lineData.slice(200, 250);
-        case "M4":
+        case "Cobalt":
+          return lineData.slice(150, 200);
+        case "Copper":
           return lineData.slice(180, 220);
-        case "M5":
-          return lineData.slice(220, 270);
-        case "M6":
+        case "Gold":
           return lineData.slice(270, 360);
+        case "Lead":
+          return lineData.slice(220, 270);
+        case "Molybdenum":
+          return lineData.slice(100, 150);
         default:
           return [];
       }
@@ -127,31 +126,26 @@ class Graph extends React.Component {
       <React.Fragment>
         <Line
           height={`200px`}
-          options={this.graphOptions}
+          options={graphOptions}
           data={{
-            label: this.props.tabs.tab,
             labels,
             datasets: [
               {
                 data: dataOne.map((item) => item.FSRaw),
-                label: `High`,
+                label: this.props.tabs.tab,
                 borderColor: "#8093f1",
                 backgroundColor: "#8093f1",
-                ...this.graphDatasets,
+                ...graphDatasets,
               },
-              // ...this.props.tabs.pin.map((item, index) => {
-              //   return {
-              //     data: dataTwo(item),
-              //     label: item,
-              //     borderColor: `rgb(255, ${132 + index * 20}, ${
-              //       132 + index * 20
-              //     })`,
-              //     backgroundColor: `rgb(255, ${132 + index * 20}, ${
-              //       132 + index * 10
-              //     })`,
-              //     ...this.graphDatasets,
-              //   };
-              // }),
+              ...this.props.tabs.pin.map((item, index) => {
+                return {
+                  data: _dataTwo(item).map((item) => item.FSRaw),
+                  label: item,
+                  borderColor: `#${colors[index]}`,
+                  backgroundColor: `#${colors[index]}`,
+                  ...graphDatasets,
+                };
+              }),
             ],
           }}
         />
