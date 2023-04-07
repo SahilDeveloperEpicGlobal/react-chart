@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import Graph from "../components/graph";
 import styles from "../styles/home.module.scss";
-import { addPin, removePin } from "../store/slices/tabs";
 import CascadeTree from "../components/cascade-tree";
 import { Cascade, TreeItem, TreeWraper } from "../components/cascade-tree";
 import response3 from "../constant/response3.json";
@@ -10,10 +9,10 @@ import DataPayloadResponse from "../constant/DataPayloadResponse.json";
 import CPINSAAll_Country from "../constant/CPINSAAll_Country.json";
 import extractGroup from "../utils/extractGroup";
 import extractData from "../utils/extractData";
-import CloseIcon from "../components/icons/CloseIcon";
 import extractCountry from "../utils/extractCountry";
 import TreeItemComponent from "../components/tree-item";
 import ContentBox from "../components/content-box";
+import Dropdown from "../components/dropdown";
 
 const categories = [
   { value: "1", label: "Commodities" },
@@ -33,14 +32,6 @@ class App extends React.Component {
         [key]: value,
       });
     };
-    this.whenPin = (event, label) => {
-      event.stopPropagation();
-      this.props.dispatch(addPin(label));
-    };
-    this.onRemoveChip = (item) => {
-      console.log(item);
-      // this.props.dispatch(removePin(item));
-    };
   }
 
   render() {
@@ -49,7 +40,7 @@ class App extends React.Component {
     // EXTRACT MEASURE DATA
     const lineData = extractData(DataPayloadResponse);
 
-    const country = extractCountry(CPINSAAll_Country);
+    const data = extractCountry(CPINSAAll_Country);
 
     return (
       <>
@@ -84,6 +75,25 @@ class App extends React.Component {
           </div>
           <div className={styles.raectselectbox}>
             <div className={styles.reactgraph}>
+              {/* <ul>
+                <li>
+                  <Dropdown
+                    items={[
+                      {
+                        id: 0,
+                        label: "Simple",
+                      },
+                      {
+                        id: 0,
+                        label: "World",
+                      },
+                    ]}
+                  />
+                </li>
+                <li>
+                  <Dropdown />
+                </li>
+              </ul> */}
               <ul>
                 <li>
                   <select
@@ -92,7 +102,7 @@ class App extends React.Component {
                       this.updateState("country", target.value)
                     }
                   >
-                    {country.map((item, index) => {
+                    {data.Country.map((item, index) => {
                       return (
                         <option key={index} value={item.DisplayName}>
                           {item.DisplayName}

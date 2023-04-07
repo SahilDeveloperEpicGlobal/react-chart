@@ -61,7 +61,7 @@ class Graph extends React.Component {
         y: {
           ticks: {
             callback: function (value) {
-              return `${value}${tabs.pin.length > 1 ? "%" : ""}`;
+              return `${value}${tabs.colorPin.length > 1 ? "%" : ""}`;
             },
           },
           scaleLabel: {
@@ -137,12 +137,12 @@ class Graph extends React.Component {
                 backgroundColor: "#8093f1",
                 ...graphDatasets,
               },
-              ...this.props.tabs.pin.map((item, index) => {
+              ...this.props.tabs.colorPin.map((_item, index) => {
                 return {
-                  data: _dataTwo(item).map((item) => item.FSRaw),
-                  label: item,
-                  borderColor: `#${colors[index]}`,
-                  backgroundColor: `#${colors[index]}`,
+                  data: _dataTwo(_item.name).map((item) => item.FSRaw),
+                  label: _item.name,
+                  borderColor: `#${_item.color}`,
+                  backgroundColor: `#${_item.color}`,
                   ...graphDatasets,
                 };
               }),

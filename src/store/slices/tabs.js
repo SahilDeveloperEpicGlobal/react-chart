@@ -1,8 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
-  tab: "Aluminum",
   pin: [],
   content: {},
+  colorPin: [
+    // {
+    //   name:'Aluminum',
+    //   color:'eeffee'
+    // }
+  ],
+  tab: "Aluminum",
 };
 const tabsSlice = createSlice({
   name: "tabs",
@@ -10,6 +17,22 @@ const tabsSlice = createSlice({
   reducers: {
     updateTab: (state, action) => {
       state[action.payload.key] = action.payload.value;
+    },
+    addColorPin: (state, action) => {
+      if (
+        state.colorPin.some((item) =>
+          item?.name?.includes(action.payload?.name)
+        )
+      ) {
+        state.colorPin = state.colorPin.filter(
+          (item) => JSON.stringify(item) !== JSON.stringify(action.payload)
+        );
+        return state;
+      }
+      if (state.colorPin.length > 2) {
+        return state;
+      }
+      state.colorPin.push(action.payload);
     },
     addPin: (state, action) => {
       if (state.pin.includes(action.payload)) {
@@ -25,10 +48,21 @@ const tabsSlice = createSlice({
       state.content = action.payload;
     },
     removePin: (state, action) => {
-      console.log("Payload", action.payload);
       state.pin = state.pin.filter((item) => item !== action.payload);
+    },
+    removeColorPin: (state, action) => {
+      state.colorPin = state.colorPin.filter(
+        (item) => item?.name !== action.payload?.name
+      );
     },
   },
 });
-export const { updateTab, addPin, addContent, removePin } = tabsSlice.actions;
+export const {
+  addPin,
+  removePin,
+  updateTab,
+  addContent,
+  addColorPin,
+  removeColorPin,
+} = tabsSlice.actions;
 export default tabsSlice;

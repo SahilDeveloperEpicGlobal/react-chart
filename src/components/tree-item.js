@@ -1,6 +1,14 @@
 import React from "react";
 import { Cascade, TreeItem, TreeWraper } from "./cascade-tree";
-import { addContent, addPin, updateTab } from "../store/slices/tabs";
+import {
+  addPin,
+  updateTab,
+  addContent,
+  addColorPin,
+} from "../store/slices/tabs";
+import colors from "../utils/colors";
+import getRandomInt from "../utils/random-number";
+
 class TreeItemComponent extends React.Component {
   constructor() {
     super(...arguments);
@@ -12,9 +20,13 @@ class TreeItemComponent extends React.Component {
         [key]: value,
       });
     };
-    this.whenPin = (event, label) => {
+    this.whenPin = (event, value) => {
       event.stopPropagation();
-      this.props.dispatch(addPin(label));
+      this.props.dispatch(addPin(value));
+    };
+    this.whenColorPin = (event, value) => {
+      event.stopPropagation();
+      this.props.dispatch(addColorPin(value));
     };
   }
 
@@ -51,11 +63,16 @@ class TreeItemComponent extends React.Component {
                 >
                   <Cascade
                     active={active}
-                    pinned={this.props.tabs.pin.includes(item.label)}
+                    pinned={this.props.tabs.colorPin.some((v) =>
+                      v?.name?.includes(item?.label)
+                    )}
                     pinProps={{
                       show: active,
                       onClick: (event) => {
-                        this.whenPin(event, item.label);
+                        this.whenColorPin(event, {
+                          name: item.label,
+                          color: colors[getRandomInt(0, colors.length - 1)],
+                        });
                       },
                     }}
                   >
