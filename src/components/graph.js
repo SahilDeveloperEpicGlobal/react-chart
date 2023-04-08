@@ -14,6 +14,7 @@ import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
 import moment from "moment/moment";
 import "chartjs-adapter-moment";
+import getRandomInt from "../utils/random-number";
 
 ChartJS.register(
   CategoryScale,
@@ -37,10 +38,10 @@ class Graph extends React.Component {
         legend: {
           position: "top",
         },
-        title: {
-          display: true,
-          text: "Chart",
-        },
+        // title: {
+        //   display: true,
+        //   text: "Chart",
+        // },
       },
       scales: {
         x: {
@@ -116,6 +117,17 @@ class Graph extends React.Component {
       }
     };
 
+    const _dataThree = (label) => {
+      switch (label) {
+        case "USA":
+          return lineData.slice(135, 269);
+        case "NLD":
+          return lineData.slice(239, 276);
+        default:
+          return [];
+      }
+    };
+
     const dataOne = _dataOne();
 
     const labels = this.props.lineData
@@ -143,6 +155,17 @@ class Graph extends React.Component {
                   label: _item.name,
                   borderColor: `#${_item.color}`,
                   backgroundColor: `#${_item.color}`,
+                  ...graphDatasets,
+                };
+              }),
+              ...this.props.tabs.countryPin.map((_item) => {
+                return {
+                  data: _dataThree(_item.name).map((item) => item.FSRaw),
+                  label: _item.name,
+                  borderColor: `#${colors[getRandomInt(0, colors.length - 1)]}`,
+                  backgroundColor: `#${
+                    colors[getRandomInt(0, colors.length - 1)]
+                  }`,
                   ...graphDatasets,
                 };
               }),

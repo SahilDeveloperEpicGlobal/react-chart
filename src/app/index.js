@@ -13,6 +13,7 @@ import extractCountry from "../utils/extractCountry";
 import TreeItemComponent from "../components/tree-item";
 import ContentBox from "../components/content-box";
 import Dropdown from "../components/dropdown";
+import { addCountryPin } from "../store/slices/tabs";
 
 const categories = [
   { value: "1", label: "Commodities" },
@@ -46,11 +47,11 @@ class App extends React.Component {
       <>
         <div className={styles.graphtab}>
           <div className={styles.tabs}>
-            {this.props.tabs.pin.length > 0 && (
+            {this.props.tabs.colorPin.length > 0 && (
               <div className={styles["selected-chips"]}>
                 <ul>
-                  {this.props.tabs.pin.map((item, index) => {
-                    return <li key={index}>{item}</li>;
+                  {this.props.tabs.colorPin.map((item, index) => {
+                    return <li key={index}>{item?.name}</li>;
                   })}
                 </ul>
               </div>
@@ -75,26 +76,22 @@ class App extends React.Component {
           </div>
           <div className={styles.raectselectbox}>
             <div className={styles.reactgraph}>
-              {/* <ul>
+              <ul>
                 <li>
                   <Dropdown
-                    items={[
-                      {
-                        id: 0,
-                        label: "Simple",
-                      },
-                      {
-                        id: 0,
-                        label: "World",
-                      },
-                    ]}
+                    onSelect={(value) =>
+                      this.props.dispatch(addCountryPin(value.pinned))
+                    }
+                    items={data.Country.map((item, index) => {
+                      return {
+                        id: index,
+                        name: item.DisplayName,
+                      };
+                    })}
                   />
                 </li>
-                <li>
-                  <Dropdown />
-                </li>
-              </ul> */}
-              <ul>
+              </ul>
+              {/* <ul>
                 <li>
                   <select
                     defaultValue={this.state.country}
@@ -127,7 +124,7 @@ class App extends React.Component {
                     })}
                   </select>
                 </li>
-              </ul>
+              </ul> */}
               <Graph
                 lineData={lineData}
                 country={this.state.country}

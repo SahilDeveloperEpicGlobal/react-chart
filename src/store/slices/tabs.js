@@ -1,14 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  pin: [],
+  // pin: [],
   content: {},
-  colorPin: [
-    // {
-    //   name:'Aluminum',
-    //   color:'eeffee'
-    // }
-  ],
+  colorPin: [],
+  countryPin: [],
   tab: "Aluminum",
 };
 const tabsSlice = createSlice({
@@ -25,7 +21,7 @@ const tabsSlice = createSlice({
         )
       ) {
         state.colorPin = state.colorPin.filter(
-          (item) => JSON.stringify(item) !== JSON.stringify(action.payload)
+          (item) => item?.name !== action.payload?.name
         );
         return state;
       }
@@ -34,21 +30,13 @@ const tabsSlice = createSlice({
       }
       state.colorPin.push(action.payload);
     },
-    addPin: (state, action) => {
-      if (state.pin.includes(action.payload)) {
-        state.pin = state.pin.filter((item) => item !== action.payload);
-        return state;
-      }
-      if (state.pin.length > 2) {
-        return state;
-      }
-      state.pin.push(action.payload);
-    },
+
     addContent: (state, action) => {
       state.content = action.payload;
     },
-    removePin: (state, action) => {
-      state.pin = state.pin.filter((item) => item !== action.payload);
+
+    addCountryPin: (state, action) => {
+      state.countryPin = action.payload;
     },
     removeColorPin: (state, action) => {
       state.colorPin = state.colorPin.filter(
@@ -64,5 +52,41 @@ export const {
   addContent,
   addColorPin,
   removeColorPin,
+  addCountryPin,
 } = tabsSlice.actions;
 export default tabsSlice;
+
+// addCountryPin: (state, action) => {
+//   if (
+//     state.countryPin.some((item) =>
+//       item?.name?.includes(action.payload?.name)
+//     )
+//   ) {
+//     state.countryPin = state.countryPin.filter(
+//       (item) => JSON.stringify(item) !== JSON.stringify(action.payload)
+//     );
+//     return state;
+//   }
+//   if (state.countryPin?.length > 2) {
+//     return state;
+//   }
+//   state.countryPin.push(action.payload);
+// },
+// addPin: (state, action) => {
+//   if (state.pin.includes(action.payload)) {
+//     state.pin = state.pin.filter((item) => item !== action.payload);
+//     return state;
+//   }
+//   if (state.pin.length > 2) {
+//     return state;
+//   }
+//   state.pin.push(action.payload);
+// },
+// removePin: (state, action) => {
+//   state.pin = state.pin.filter((item) => item !== action.payload);
+// },
+// removeCountryPin: (state, action) => {
+//   state.countryPin = state.countryPin.filter(
+//     (item) => item?.name !== action.payload?.name
+//   );
+// },

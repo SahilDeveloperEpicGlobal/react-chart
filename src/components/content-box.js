@@ -15,7 +15,8 @@ class ContentBox extends React.Component {
                 color: `#${item.color}`,
               }}
             >
-              Global Commodity Price Index For {item.name} [{this.props.country}
+              Global Commodity Price Index For {item.name} [
+              {this.props.tabs.countryPin[index]?.name}
               ],{" "}
               <a
                 href="/"
