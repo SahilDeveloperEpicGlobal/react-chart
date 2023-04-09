@@ -5,7 +5,7 @@ const initialState = {
   content: {},
   colorPin: [],
   countryPin: [],
-  tab: "Aluminum",
+  tab: "",
 };
 const tabsSlice = createSlice({
   name: "tabs",

@@ -47,7 +47,7 @@ class App extends React.Component {
       <>
         <div className={styles.graphtab}>
           <div className={styles.tabs}>
-            {this.props.tabs.colorPin.length > 0 && (
+            {/* {this.props.tabs.colorPin.length > 0 && (
               <div className={styles["selected-chips"]}>
                 <ul>
                   {this.props.tabs.colorPin.map((item, index) => {
@@ -55,7 +55,7 @@ class App extends React.Component {
                   })}
                 </ul>
               </div>
-            )}
+            )} */}
             <CascadeTree>
               <TreeItem>
                 <Cascade>Col</Cascade>

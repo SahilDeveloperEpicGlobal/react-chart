@@ -49,6 +49,7 @@ class TreeItemComponent extends React.Component {
           >
             {this.props.options.map((item) => {
               const active = this.props.tabs.tab === item.label;
+              console.log(item);
               return (
                 <TreeItem
                   onClick={() => {

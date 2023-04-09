@@ -55,12 +55,14 @@ class Graph extends React.Component {
             },
           },
           ticks: {
-            maxTicksLimit: 11.1,
+            maxTicksLimit: 11,
           },
           display: true,
         },
         y: {
           ticks: {
+            min: 0,
+            max: 100,
             callback: function (value) {
               return `${value}${tabs.colorPin.length > 1 ? "%" : ""}`;
             },
@@ -124,7 +126,7 @@ class Graph extends React.Component {
         case "NLD":
           return lineData.slice(239, 276);
         default:
-          return [];
+          return;
       }
     };
 
@@ -143,7 +145,7 @@ class Graph extends React.Component {
             labels,
             datasets: [
               {
-                data: dataOne.map((item) => item.FSRaw),
+                data: dataOne?.map((item) => item.FSRaw),
                 label: this.props.tabs.tab,
                 borderColor: "#8093f1",
                 backgroundColor: "#8093f1",

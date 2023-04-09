@@ -7,6 +7,22 @@ class ContentBox extends React.Component {
   render() {
     return (
       <ul className={styles["content-box"]}>
+        {this.props.tabs?.content && (
+          <li>
+            Global Commodity Price Index For {this.props.tabs?.content?.label} [
+            {this.props.tabs.countryPin[0]?.name}
+            ],{" "}
+            <a
+              href={this.props.tabs?.content?.url}
+              style={{
+                fontWeight: "500",
+              }}
+            >
+              Link to data (external)
+            </a>
+          </li>
+        )}
+
         {this.props.tabs.colorPin.map((item, index) => {
           return (
             <li
@@ -19,7 +35,7 @@ class ContentBox extends React.Component {
               {this.props.tabs.countryPin[index]?.name}
               ],{" "}
               <a
-                href="/"
+                href={item?.url}
                 style={{
                   // color: "#3F51B5",
                   fontWeight: "500",
