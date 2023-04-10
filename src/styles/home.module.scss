@@ -176,6 +176,7 @@
     font-size: 0.8rem;
     position: relative;
     background: rgb(241, 241, 241);
+    padding-left: 30px;
   }
 }
 .close-icon {
@@ -184,13 +185,14 @@
   align-items: center;
   top: 50%;
   transform: translateY(-50%);
-  right: 10px;
+  // right: 10px;
+  left: 2px;
   height: 24px;
   width: 24px;
   border-radius: 100%;
   justify-content: center;
   &:hover {
-    background: #d1d1d1;
+    // background: #d1d1d1;
   }
 }
 

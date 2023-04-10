@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   once: {
     name: "",
-    country: "",
+    country: "USA",
     url: "",
   },
   pinned: [],

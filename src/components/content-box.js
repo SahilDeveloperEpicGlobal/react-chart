@@ -12,7 +12,6 @@ class ContentBox extends React.Component {
         item?.country !== this.props.pins.once?.country
     );
 
-    console.log(filterPinned);
     return (
       <ul className={styles["content-box"]}>
         {this.props.pins?.once?.name && (
