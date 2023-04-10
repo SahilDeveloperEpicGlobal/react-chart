@@ -1,57 +1,57 @@
 import React from "react";
 import styles from "../styles/home.module.scss";
-import { removeColorPin } from "../store/slices/tabs";
 import CloseIcon from "../components/icons/CloseIcon";
+import { removePin } from "../store/slices/pins";
 
 class ContentBox extends React.Component {
   render() {
     return (
       <ul className={styles["content-box"]}>
-        {this.props.tabs?.content && (
+        {this.props.pins?.once?.name && (
           <li>
-            Global Commodity Price Index For {this.props.tabs?.content?.label} [
-            {this.props.tabs.countryPin[0]?.name}
-            ],{" "}
-            <a
-              href={this.props.tabs?.content?.url}
-              style={{
-                fontWeight: "500",
-              }}
-            >
-              Link to data (external)
-            </a>
-          </li>
-        )}
-
-        {this.props.tabs.colorPin.map((item, index) => {
-          return (
-            <li
-              key={index}
-              style={{
-                color: `#${item.color}`,
-              }}
-            >
-              Global Commodity Price Index For {item.name} [
-              {this.props.tabs.countryPin[index]?.name}
-              ],{" "}
+            Global Commodity Price Index For {this.props.pins?.once?.name}{" "}
+            {`[${this.props.pins?.once?.country}]`}{" "}
+            {this.props.pins?.once?.url && (
               <a
-                href={item?.url}
+                href={this.props.pins?.once?.url}
                 style={{
-                  // color: "#3F51B5",
                   fontWeight: "500",
                 }}
               >
-                Link to data (external)
+                ,Link to data (external)
               </a>
-              <span
-                className={styles["close-icon"]}
-                onClick={() => this.props.dispatch(removeColorPin(item))}
+            )}
+          </li>
+        )}
+        {this.props.pinned?.length > 0 &&
+          this.props.pinned.map((item, index) => {
+            return (
+              <li
+                key={index}
+                style={{
+                  color: `#${item.color}`,
+                }}
               >
-                <CloseIcon height={16} width={16} fill="#555" />
-              </span>
-            </li>
-          );
-        })}
+                <span
+                  className={styles["close-icon"]}
+                  onClick={() => this.props.dispatch(removePin(item))}
+                >
+                  <CloseIcon height={16} width={16} fill="#555" />
+                </span>
+                Global Commodity Price Index For {item.name} [
+                {this.props.tabs.countryPin[index]?.name}
+                ],{" "}
+                <a
+                  href={item?.url}
+                  style={{
+                    fontWeight: "500",
+                  }}
+                >
+                  Link to data (external)
+                </a>
+              </li>
+            );
+          })}
       </ul>
     );
   }

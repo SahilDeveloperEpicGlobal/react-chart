@@ -193,3 +193,15 @@
     background: #d1d1d1;
   }
 }
+
+// FOR SELECT
+
+.select {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  span {
+    display: flex;
+    align-items: center;
+  }
+}

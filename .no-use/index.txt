@@ -1,0 +1,46 @@
+  {/* <ul>
+                <li>
+                  <select
+                    defaultValue={this.state.country}
+                    onChange={({ target }) =>
+                      this.updateState("country", target.value)
+                    }
+                  >
+                    {data.Country.map((item, index) => {
+                      return (
+                        <option key={index} value={item.DisplayName}>
+                          {item.DisplayName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </li>
+                <li>
+                  <select
+                    defaultValue={this.state.category}
+                    onChange={({ target }) =>
+                      this.updateState("category", target.value)
+                    }
+                  >
+                    {categories.map((item, index) => {
+                      return (
+                        <option key={index} value={item.label}>
+                          {item.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </li>
+              </ul> */}
+
+                {/* <Dropdown
+                    onSelect={(value) =>
+                      this.props.dispatch(addCountryPin(value.pinned))
+                    }
+                    items={data.Country.map((item, index) => {
+                      return {
+                        id: index,
+                        name: item.DisplayName,
+                      };
+                    })}
+                  /> */}

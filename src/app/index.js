@@ -6,28 +6,20 @@ import CascadeTree from "../components/cascade-tree";
 import { Cascade, TreeItem, TreeWraper } from "../components/cascade-tree";
 import response3 from "../constant/response3.json";
 import DataPayloadResponse from "../constant/DataPayloadResponse.json";
-import CPINSAAll_Country from "../constant/CPINSAAll_Country.json";
+import Country_Data from "../constant/2country_Data[1].json";
 import extractGroup from "../utils/extractGroup";
 import extractData from "../utils/extractData";
 import extractCountry from "../utils/extractCountry";
 import TreeItemComponent from "../components/tree-item";
 import ContentBox from "../components/content-box";
-import Dropdown from "../components/dropdown";
-import { addCountryPin } from "../store/slices/tabs";
-
-const categories = [
-  { value: "1", label: "Commodities" },
-  { value: "2", label: "Catalog" },
-  { value: "3", label: "Consumer" },
-];
+import Select from "react-select";
+import PinIcon from "../components/icons/PinIcon";
+import PinSelectedIcon from "../components/icons/PinSelectedIcon";
+import { updateState } from "../store/slices/pins";
 
 class App extends React.Component {
   constructor() {
     super(...arguments);
-    this.state = {
-      country: "USA",
-      category: "Commodities",
-    };
     this.updateState = (key, value) => {
       this.setState({
         [key]: value,
@@ -41,21 +33,21 @@ class App extends React.Component {
     // EXTRACT MEASURE DATA
     const lineData = extractData(DataPayloadResponse);
 
-    const data = extractCountry(CPINSAAll_Country);
+    const data = extractCountry(Country_Data);
 
+    const countryData = data.Country.map((item, index) => {
+      return {
+        id: index,
+        value: item.DisplayName.toLowerCase(),
+        label: item.DisplayName,
+      };
+    });
+
+    console.log(this.props.pins);
     return (
       <>
         <div className={styles.graphtab}>
           <div className={styles.tabs}>
-            {/* {this.props.tabs.colorPin.length > 0 && (
-              <div className={styles["selected-chips"]}>
-                <ul>
-                  {this.props.tabs.colorPin.map((item, index) => {
-                    return <li key={index}>{item?.name}</li>;
-                  })}
-                </ul>
-              </div>
-            )} */}
             <CascadeTree>
               <TreeItem>
                 <Cascade>Col</Cascade>
@@ -65,7 +57,7 @@ class App extends React.Component {
                       <TreeItemComponent
                         label={item.label}
                         options={item.options}
-                        tabs={this.props.tabs}
+                        pins={this.props.pins}
                         dispatch={this.props.dispatch}
                       />
                     );
@@ -78,64 +70,47 @@ class App extends React.Component {
             <div className={styles.reactgraph}>
               <ul>
                 <li>
-                  <Dropdown
-                    onSelect={(value) =>
-                      this.props.dispatch(addCountryPin(value.pinned))
-                    }
-                    items={data.Country.map((item, index) => {
-                      return {
-                        id: index,
-                        name: item.DisplayName,
-                      };
-                    })}
-                  />
+                  <div className={styles["select"]}>
+                    <Select
+                      defaultValue={countryData[0]}
+                      options={countryData}
+                      onChange={(value) =>
+                        this.props.dispatch(
+                          updateState({
+                            key: "once",
+                            value: {
+                              ...this.props.pins.once,
+                              country: value?.label,
+                            },
+                          })
+                        )
+                      }
+                    />
+                    <span
+                      onClick={() => {
+                        if (this.props.pins.once?.name) {
+                          updateState({
+                            key: "pinned",
+                            value: this.props.pins.once,
+                          });
+                        }
+                      }}
+                    >
+                      {false ? (
+                        <PinSelectedIcon height={16} width={16} fill="#555" />
+                      ) : (
+                        <PinIcon height={16} width={16} fill="#555" />
+                      )}
+                    </span>
+                  </div>
                 </li>
               </ul>
-              {/* <ul>
-                <li>
-                  <select
-                    defaultValue={this.state.country}
-                    onChange={({ target }) =>
-                      this.updateState("country", target.value)
-                    }
-                  >
-                    {data.Country.map((item, index) => {
-                      return (
-                        <option key={index} value={item.DisplayName}>
-                          {item.DisplayName}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </li>
-                <li>
-                  <select
-                    defaultValue={this.state.category}
-                    onChange={({ target }) =>
-                      this.updateState("category", target.value)
-                    }
-                  >
-                    {categories.map((item, index) => {
-                      return (
-                        <option key={index} value={item.label}>
-                          {item.label}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </li>
-              </ul> */}
-              <Graph
-                lineData={lineData}
-                country={this.state.country}
-                category={this.state.category}
-              />
+              <Graph lineData={lineData} pins={this.props.pins} />
             </div>
             <div>
               <ContentBox
-                tabs={this.props.tabs}
+                pins={this.props.pins}
                 dispatch={this.props.dispatch}
-                country={this.state.country}
               />
             </div>
           </div>
@@ -146,6 +121,6 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  tabs: state.tabs,
+  pins: state.pins,
 });
 export default connect(mapStateToProps)(App);

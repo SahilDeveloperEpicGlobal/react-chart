@@ -14,6 +14,7 @@ const CascadeTree = ({ children }) => {
 export default CascadeTree;
 
 export const Cascade = ({
+  plusMinus = true,
   active,
   checked,
   pinProps,
@@ -29,7 +30,7 @@ export const Cascade = ({
       }}
       {...rest}
     >
-      {<PlusMinus active={checked} />}
+      {plusMinus && <PlusMinus active={checked} />}
       {children}
 
       {pinProps ? (
