@@ -12,7 +12,6 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { connect } from "react-redux";
-import moment from "moment/moment";
 import "chartjs-adapter-moment";
 
 ChartJS.register(
@@ -58,7 +57,7 @@ class Graph extends React.Component {
             min: 0,
             max: 100,
             callback: function (value) {
-              return `${value}${pins.once?.name.length > 1 ? "%" : ""}`;
+              return `${value}${pins.pinned?.length > 0 ? "%" : ""}`;
             },
             beginAtZero: true,
           },
@@ -97,10 +96,27 @@ class Graph extends React.Component {
 
     const dataOne = _dataOne();
 
-    const labels = this.props.lineData
-      .slice(0, 50)
-      .map((data) => moment(data.date).format("YYYY/MM/DD"));
+    const _dataTwo = (label) => {
+      switch (label) {
+        case "Aluminum":
+          return lineData.slice(200, 250);
+        case "Cobalt":
+          return lineData.slice(150, 200);
+        case "Copper":
+          return lineData.slice(180, 220);
+        case "Gold":
+          return lineData.slice(270, 360);
+        case "Lead":
+          return lineData.slice(220, 270);
+        case "Molybdenum":
+          return lineData.slice(100, 150);
+        default:
+          return [];
+      }
+    };
 
+    const pinned = this.props.pins.pinned;
+    const once = this.props.pins.once;
     return (
       <React.Fragment>
         <Line
@@ -109,13 +125,31 @@ class Graph extends React.Component {
           data={{
             labels: this.props.lineData.slice(0, 50).map((data) => data.date),
             datasets: [
-              {
-                data: dataOne?.map((item) => item.FSRaw),
-                label: `${this.props?.pins?.once?.name} | ${this.props?.pins?.once?.country}`,
-                borderColor: "#8093f1",
-                backgroundColor: "#8093f1",
-                ...graphDatasets,
-              },
+              ...[once].map((item) => {
+                if (item?.name && item?.country) {
+                  return {
+                    data: dataOne?.map((item) => item.FSRaw),
+                    label: once?.name && `${item?.name} | ${item?.country}`,
+                    borderColor: "#8093f1",
+                    backgroundColor: "#8093f1",
+                    ...graphDatasets,
+                  };
+                }
+                return {
+                  label: "",
+                  borderColor: "#fff",
+                  backgroundColor: "#fff",
+                };
+              }),
+              ...pinned.map((item, index) => {
+                return {
+                  data: _dataTwo(item.name)?.map((item) => item.FSRaw),
+                  label: `${item?.name} | ${item?.country}`,
+                  borderColor: `#${item.color}`,
+                  backgroundColor: `#${item.color}`,
+                  ...graphDatasets,
+                };
+              }),
             ],
           }}
         />

@@ -5,6 +5,14 @@ import { removePin } from "../store/slices/pins";
 
 class ContentBox extends React.Component {
   render() {
+    const pinned = this.props.pins.pinned;
+    const filterPinned = pinned.filter(
+      (item) =>
+        item?.name !== this.props.pins.once?.name ||
+        item?.country !== this.props.pins.once?.country
+    );
+
+    console.log(filterPinned);
     return (
       <ul className={styles["content-box"]}>
         {this.props.pins?.once?.name && (
@@ -23,8 +31,8 @@ class ContentBox extends React.Component {
             )}
           </li>
         )}
-        {this.props.pinned?.length > 0 &&
-          this.props.pinned.map((item, index) => {
+        {filterPinned?.length > 0 &&
+          filterPinned.map((item, index) => {
             return (
               <li
                 key={index}
@@ -38,17 +46,18 @@ class ContentBox extends React.Component {
                 >
                   <CloseIcon height={16} width={16} fill="#555" />
                 </span>
-                Global Commodity Price Index For {item.name} [
-                {this.props.tabs.countryPin[index]?.name}
+                Global Commodity Price Index For {item.name} [{item.country}
                 ],{" "}
-                <a
-                  href={item?.url}
-                  style={{
-                    fontWeight: "500",
-                  }}
-                >
-                  Link to data (external)
-                </a>
+                {item?.url && (
+                  <a
+                    href={item?.url}
+                    style={{
+                      fontWeight: "500",
+                    }}
+                  >
+                    Link to data (external)
+                  </a>
+                )}
               </li>
             );
           })}

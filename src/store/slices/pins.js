@@ -6,13 +6,7 @@ const initialState = {
     country: "",
     url: "",
   },
-  pinned: [
-    // {
-    //   name: "",
-    //   country: "",
-    //   url: "",
-    // },
-  ],
+  pinned: [],
 };
 const pinSlice = createSlice({
   name: "tabs",
@@ -22,15 +16,7 @@ const pinSlice = createSlice({
       state[action.payload.key] = action.payload.value;
     },
     updatePin: (state, action) => {
-      if (
-        state.pinned.some((item) => item?.name?.includes(action.payload?.name))
-      ) {
-        state.pinned = state.pinned.filter(
-          (item) => item?.name !== action.payload?.name
-        );
-        return state;
-      }
-      if (state.pinned.length > 2) {
+      if (state.pinned.length > 1) {
         return state;
       }
       state.pinned.push(action.payload);
@@ -44,3 +30,17 @@ const pinSlice = createSlice({
 });
 export const { updateState, updatePin, removePin } = pinSlice.actions;
 export default pinSlice;
+
+// {
+//   name: "",
+//   country: "",
+//   url: "",
+// },
+//   if (
+//     state.pinned.some((item) => item?.name?.includes(action.payload?.name))
+//   ) {
+//     state.pinned = state.pinned.filter(
+//       (item) => item?.name !== action.payload?.name
+//     );
+//     return state;
+//   }

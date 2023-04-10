@@ -15,7 +15,9 @@ import ContentBox from "../components/content-box";
 import Select from "react-select";
 import PinIcon from "../components/icons/PinIcon";
 import PinSelectedIcon from "../components/icons/PinSelectedIcon";
-import { updateState } from "../store/slices/pins";
+import { updatePin, updateState } from "../store/slices/pins";
+import random from "../utils/random-number";
+import colors from "../utils/colors";
 
 class App extends React.Component {
   constructor() {
@@ -43,7 +45,6 @@ class App extends React.Component {
       };
     });
 
-    console.log(this.props.pins);
     return (
       <>
         <div className={styles.graphtab}>
@@ -89,10 +90,12 @@ class App extends React.Component {
                     <span
                       onClick={() => {
                         if (this.props.pins.once?.name) {
-                          updateState({
-                            key: "pinned",
-                            value: this.props.pins.once,
-                          });
+                          this.props.dispatch(
+                            updatePin({
+                              ...this.props.pins.once,
+                              color: colors[random(0, colors.length - 1)],
+                            })
+                          );
                         }
                       }}
                     >

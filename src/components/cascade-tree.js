@@ -6,7 +6,7 @@ import PinSelectedIcon from "./icons/PinSelectedIcon";
 
 const CascadeTree = ({ children }) => {
   return (
-    <TreeWraper class={`${styles["tree"]} ${styles["cascade"]}`}>
+    <TreeWraper className={`${styles["tree"]} ${styles["cascade"]}`}>
       {children}
     </TreeWraper>
   );
